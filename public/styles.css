@@ -11,11 +11,22 @@ body {
     justify-content: flex-start;
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 #current-time {
     font-family: 'Montserrat', sans-serif;
     font-size: 7.5rem;
     margin-top: 15rem;
     margin-bottom: 8rem;
+    cursor: default;
 }
 
 #input-cityName {
@@ -32,6 +43,7 @@ body {
     border-radius: 8px;
     background: #007BFF;
     padding: 8px 16px;
+    cursor: pointer;
 }
 
 
