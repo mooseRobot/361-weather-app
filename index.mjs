@@ -50,19 +50,11 @@ app.get("/search", async (req, res) => {
         let data = await response.json();
 
         // Redirect to the /results route with the weather data
-        res.redirect(`/results?data=${encodeURIComponent(JSON.stringify(data))}`);
+        res.json(data); // Send JSON response
     } catch (error) {
         // Handle errors
         res.status(500).send('Error fetching weather data');
     }
-});
-
-app.get("/results", (req, res) => {
-    // Parse the data from the query string
-    let data = JSON.parse(req.query.data);
-    console.log(data)
-    // Render the results.ejs template with the data
-    res.render('results', { weatherData: data });
 });
 
 app.get("/", (req, res) => {
