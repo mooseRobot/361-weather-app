@@ -50,7 +50,7 @@ function searchCity (cityName) {
             return response.json();
         })
         .then(data => {
-            console.log(data)
+            // console.log(data)
             const {name, main, weather} = data;
             // Convert kelvin to fahrenheit
             const fahrenheitTemp = (main.temp - 273.15) * 9/5 + 32
