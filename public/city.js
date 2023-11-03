@@ -50,6 +50,9 @@ function searchCity (cityName) {
             return response.json();
         })
         .then(data => {
+            const inputCity = document.getElementById('input-cityName');
+            const cityValue = inputCity.value;
+            inputCity.value = ''
             // console.log(data)
             const {name, main, weather} = data;
             // Convert kelvin to fahrenheit
