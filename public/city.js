@@ -17,29 +17,29 @@ function updateTime(){
 }
 
 
-async function searchCity2(e) {
-    e.preventDefault()
-    try {
-        const inputCity = document.getElementById('input-cityName');
-        const cityValue = inputCity.value;
-        inputCity.value = ''
-
-        const response = await fetch(`/search?city=${cityValue}`)
-
-
-        // api call
-        // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityNameValue}&appid=${apiKey}`);
-        // const data = await response.json();
-        //
-        // // clear text box?
-        // const {name, main, weather} = data;
-        // const fahrenheitTemp = (main.temp - 273.15) * 9/5 + 32
-        // alert(`${Math.trunc(fahrenheitTemp)} F`)
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+// async function searchCity(e) {
+//     e.preventDefault()
+//     try {
+//         const inputCity = document.getElementById('input-cityName');
+//         const cityValue = inputCity.value;
+//         inputCity.value = ''
+//
+//         const response = await fetch(`/search?city=${cityValue}`)
+//
+//
+//         // api call
+//         // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityNameValue}&appid=${apiKey}`);
+//         // const data = await response.json();
+//         //
+//         // // clear text box?
+//         // const {name, main, weather} = data;
+//         // const fahrenheitTemp = (main.temp - 273.15) * 9/5 + 32
+//         // alert(`${Math.trunc(fahrenheitTemp)} F`)
+//     }
+//     catch (error) {
+//         console.log(error);
+//     }
+// }
 
 function searchCity (cityName) {
     fetch(`/search?city=${encodeURIComponent(cityName)}`)
