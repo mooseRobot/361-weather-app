@@ -19,28 +19,6 @@ app.set('view engine', 'handlebars');
 app.set('views', './public');
 
 
-let htmlTop = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Weather App</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='public/styles.css'>
-</head>
-`
-
-let htmlBottom = `
-    </main>
-<footer>
-<p>&copy; 2023</p>
-</footer>
-</body>
-</html>
-`
-
-
 app.get("/search", async (req, res) => {
     const cityName = req.query.city;
     let currentWeather = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
