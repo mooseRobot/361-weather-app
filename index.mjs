@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import fetch from 'node-fetch';
-import asyncHandler from 'express-async-handler';
-import { engine } from 'express-handlebars';
 
 const PORT = process.env.PORT;
 const apiKey = process.env.APIKEY;
@@ -13,10 +11,6 @@ app.use(express.urlencoded({
 }));
 
 app.use(express.static('public'));
-
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './public');
 
 
 app.get("/search", async (req, res) => {
@@ -35,9 +29,6 @@ app.get("/search", async (req, res) => {
     }
 });
 
-app.get("/", (req, res) => {
-    res.send('public/skeleton')
-});
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
