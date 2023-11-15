@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkyCheck</title>
+    <script src='city.js' defer></script>
+    <link rel="stylesheet" href="results.css">
+</head>
+<body>
+<div class="time-container">
+    <p id="current-time-post" class="noselect">00:00</p>
+    <div class="search-bar">
+        <form id="ctyNameSearch" action="/search" method="GET">
+            <input type="search" id="input-cityName-post" name="city" placeholder="Enter a city name" required>
+            <input type="submit" id="submit-button" value="Submit">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
