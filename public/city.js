@@ -3,7 +3,7 @@
 const apiKey = "40f6beb9a3d9d3d1d6801a4a00e1ea86"
 
 function updateTime(){
-    let currentTime = document.getElementById('current-time')
+    let currentTime = document.querySelector('.time-container').firstElementChild
     const date = new Date();
 
     let hours = date.getHours();
