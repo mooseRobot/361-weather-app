@@ -66,7 +66,6 @@ function searchCity (cityName) {
 
             // Get icon
             const icon = document.createElement('img')
-
             const iconCode = weather[0].icon;
             icon.src = `http://openweathermap.org/img/w/${iconCode}.png`
             container.appendChild(icon)
@@ -84,8 +83,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
     updateTime()
 })
 
-document.getElementById('ctyNameSearch').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const cityName = document.getElementById('input-cityName').value;
-    searchCity(cityName);
-});
+// document.getElementById('ctyNameSearch').addEventListener('submit', function(e) {
+//     e.preventDefault();
+//     const cityName = document.getElementById('input-cityName').value;
+//     searchCity(cityName);
+// });
