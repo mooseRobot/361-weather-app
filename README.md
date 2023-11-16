@@ -22,3 +22,6 @@ This microservice provides an interface to fetch and serve trivia questions base
 
 #### Response Format
 - JSON object representing a trivia question
+
+#### UML Sequence Diagram
+![uml sequence diagram](https://cdn.discordapp.com/attachments/1057974302739280002/1174835993908625461/fb2c95ce63.png?ex=65690a48&is=65569548&hm=2f5dec36e3fe1aab2853fb065efd2c2b274a930bf8452bcdca7894117670c266&)
