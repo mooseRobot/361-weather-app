@@ -14,11 +14,11 @@ This microservice provides an interface to fetch and serve trivia questions base
 ### Usage
 1. Start the microservice
 2. The service listens on a ZeroMQ socket at `tcp://*:5555`.
-3. The client requests should be in a JSON format with the following keys: `"request"`, `"difficulty"`, and `"category"`.
+3. The client requests should be in a JSON format and sent using UTF-8 encoding with the following keys: `"request"`, `"difficulty"`, and `"category"`.
 4. The service will respond with a trivia question in JSON format.
 
 #### Request Format
 - `{"request": "getQuestion", "difficulty": "easy", "category": "music"}`
 
 #### Response Format
-- JSON object representing a trivia question.
+- JSON object representing a trivia question
