@@ -35,12 +35,12 @@ function createWeatherCard(record, cityName) {
             <div class="weather-card">
                 <div class="weather-header">
                     <div class="weather-glace">
-                        <div class="weather-icon margin-10"><img src="${iconUrl}" alt="${cityName} weather"/></div>
+                        <img src="${iconUrl}" class="weather-icon margin-10" alt="${cityName} weather" width="40"/>
                         <div class="description margin-10">${description}</div>
                     </div>
                     <div class="temperatures">
-                        <div class="high margin-10">High: ${highTemp}</div>
-                        <div class="low margin-10">Low: ${lowTemp}</div>
+                        <div class="high margin-top-bottom-10">High: ${highTemp}</div>
+                        <div class="low margin-top-bottom-10">Low: ${lowTemp}</div>
                     </div>
                 </div>
                 <div class="precipitation">Precipitation: 45%</div> <!-- Adjust if you have precipitation data -->
