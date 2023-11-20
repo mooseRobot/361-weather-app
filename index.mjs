@@ -36,14 +36,14 @@ function createWeatherCard(record, cityName) {
                 <div class="weather-header">
                     <div class="weather-glace">
                         <img src="${iconUrl}" class="weather-icon margin-10" alt="${cityName} weather" width="40"/>
-                        <div class="description margin-10">${description}</div>
+                        <div class="description margin-5 width-85px">${description}</div>
                     </div>
                     <div class="temperatures">
                         <div class="high margin-top-bottom-10">High: ${highTemp}</div>
                         <div class="low margin-top-bottom-10">Low: ${lowTemp}</div>
                     </div>
                 </div>
-                <div class="precipitation">Precipitation: 45%</div> <!-- Adjust if you have precipitation data -->
+                <div class="precipitation">Precipitation: 45%</div> <!-- Need to replace with precipitation -->
             </div>
         </div>`;
 }
@@ -72,7 +72,7 @@ function createMainWeatherCard(record, cityName) {
                 <div class="high margin-5">High: 89°</div>
                 <div class="UV-index margin-5">UV Index: 8</div>
                 <div class="low margin-5">Low: 70°</div>
-                <div class="humidity margin-5">30%</div>
+                <div class="humidity margin-5"> Humidity 30%</div>
             </div>
             <div class="precipitation">Precipitation: 45%</div>
         </div>
