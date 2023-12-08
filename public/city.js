@@ -91,8 +91,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
     // const cityForm = document.getElementById('ctyNameSearch');
     // cityForm.addEventListener('submit', searchCity);
     updateTime()
-    const refreshButton = document.getElementById('refresh');
-    refreshButton.addEventListener('click', refreshPage)
+    try {
+        const refreshButton = document.getElementById('refresh');
+        refreshButton.addEventListener('click', refreshPage)
+    }
+    catch (e) {
+        console.log(e)
+    }
 })
 
 // document.getElementById('ctyNameSearch').addEventListener('submit', function(e) {
