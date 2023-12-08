@@ -41,6 +41,16 @@ function updateTime(){
 //     }
 // }
 
+async function refreshPage(e) {
+    e.preventDefault()
+
+    try {
+        window.location.reload()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 function searchCity (cityName) {
     fetch(`/search?city=${encodeURIComponent(cityName)}`)
         .then(response => {
@@ -81,6 +91,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
     // const cityForm = document.getElementById('ctyNameSearch');
     // cityForm.addEventListener('submit', searchCity);
     updateTime()
+    const refreshButton = document.getElementById('refresh');
+    refreshButton.addEventListener('click', refreshPage)
 })
 
 // document.getElementById('ctyNameSearch').addEventListener('submit', function(e) {

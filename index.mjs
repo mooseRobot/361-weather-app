@@ -89,7 +89,7 @@ function createMainWeatherCard(record, cityName) {
                 <div class="weather-header-main flex">
                     <div class="weather-icon"><img src="${weatherIconUrl}" alt="Weather Icon"></div>
                     <div class="city-name h1-font-size">${cityName}</div>
-                    <div class="refresh">🔄</div>
+                    <div id="refresh">🔄</div>
                 </div>
                 <div class="sub-header-main flex">
                     <div class="description">${description}</div>
