@@ -84,16 +84,13 @@ def prev():
     weather_response_future = requests.get(
         f"https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&units=imperial&start={int(future)}&end={int(future_1)}&appid={API_KEY}")
     weather_response_current_updated = requests.get(
-        f"https://api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&units=imperial&&cnt={3}&appid={API_KEY}")
+        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&&cnt={3}&appid={API_KEY}")
 
-    icon = "put icon here"
-
-    icon_url = f"http://openweathermap.org/img/w/{icon}.png"
+    print(weather_response_future)
 
     previous_weather = {
         "previous_weather_2_day": {
             "date" : prev_date_last,
-            "icon": weather_response_previous.json()["list"][0]["weather"][0]["icon"],
             "lat": lat,
             "lon": lon,
             "temperature_max": weather_response_previous.json()["list"][0]["main"]["temp_max"],
@@ -101,8 +98,8 @@ def prev():
             "humidity" : weather_response_previous.json()["list"][0]["main"]["humidity"],
             "weather_id": weather_response_previous.json()["list"][0]["weather"][0]["id"],
             "main": weather_response_previous.json()["list"][0]["weather"][0]["main"],
-            "description": weather_response_previous.json()["list"][0]["weather"][0]["description"]
-
+            "description": weather_response_previous.json()["list"][0]["weather"][0]["description"],
+            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_previous.json()["list"][0]["weather"][0]["icon"]}.png'
         }}
 
     previous_weather_1_day = {
@@ -117,7 +114,8 @@ def prev():
             "humidity": weather_response_previous.json()["list"][-1]["main"]["humidity"],
             "weather_id": weather_response_previous.json()["list"][-1]["weather"][0]["id"],
             "main": weather_response_previous.json()["list"][-1]["weather"][0]["main"],
-            "description": weather_response_previous.json()["list"][-1]["weather"][0]["description"]
+            "description": weather_response_previous.json()["list"][-1]["weather"][0]["description"],
+            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_previous.json()["list"][-1]["weather"][0]["icon"]}.png'
 
         }
 
@@ -127,15 +125,17 @@ def prev():
 
         "current_weather": {
             "date": str(on_date)[0:15],
-            "icon": weather_response_current_updated.json()["list"][0]["weather"][0]["icon"],
             "lat": lat,
             "lon": lon,
-            "temperature_max": (weather_response_current_updated.json()["list"][0]["temp"]["max"]),
-            "temperature_min": (weather_response_current_updated.json()["list"][0]["temp"]["min"]),
-            "humidity" : weather_response_current_updated.json()["list"][0]["humidity"],
-            "weather_id": weather_response_current_updated.json()["list"][0]["weather"][0]["id"],
-            "main": weather_response_current_updated.json()["list"][0]["weather"][0]["main"],
-            "description": weather_response_current_updated.json()["list"][0]["weather"][0]["description"]
+            "temperature_max": weather_response_current_updated.json()["main"]["temp_max"],
+            "temperature_min": weather_response_current_updated.json()["main"]["temp_min"],
+            "current_temperature": weather_response_current_updated.json()["main"]["temp"],
+            "humidity" : weather_response_current_updated.json()["main"]["humidity"],
+            "weather_description": weather_response_current_updated.json()["weather"][0]["description"],
+            "weather_icon_url": f'http://openweathermap.org/img/w/{weather_response_current_updated.json()["weather"][0]["icon"]}.png',
+        
+            "cloudiness": weather_response_current_updated.json()["clouds"]["all"],
+            "feels_like": weather_response_current_updated.json()["main"]["feels_like"],
 
         }
 
@@ -144,16 +144,16 @@ def prev():
     future_weather = {
 
         "future_weather": {
-            "date": future_date_first,
-            "icon": weather_response_current_updated.json()["list"][1]["weather"][0]["icon"],
+            "date" : future_date_first,
             "lat": lat,
             "lon": lon,
-            "temperature_max": weather_response_current_updated.json()["list"][1]["temp"]["max"],
-            "temperature_min": weather_response_current_updated.json()["list"][1]["temp"]["min"],
-            "humidity" : weather_response_current_updated.json()["list"][1]["humidity"],
-            "weather_id": weather_response_current_updated.json()["list"][1]["weather"][0]["id"],
-            "main": weather_response_current_updated.json()["list"][1]["weather"][0]["main"],
-            "description": weather_response_current_updated.json()["list"][1]["weather"][0]["description"]
+            "temperature_max": weather_response_future.json()["list"][0]["main"]["temp_max"],
+            "temperature_min": weather_response_future.json()["list"][0]["main"]["temp_min"],
+            "humidity" : weather_response_future.json()["list"][0]["main"]["humidity"],
+            "weather_id": weather_response_future.json()["list"][0]["weather"][0]["id"],
+            "main": weather_response_future.json()["list"][0]["weather"][0]["main"],
+            "description": weather_response_future.json()["list"][0]["weather"][0]["description"],
+            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_future.json()["list"][0]["weather"][0]["icon"]}.png'
 
         }}
 
@@ -161,28 +161,24 @@ def prev():
 
         "future_weather_next": {
             "date": future_date_last,
-            "icon": weather_response_current_updated.json()["list"][-1]["weather"][0]["icon"],
+            "icon": weather_response_future.json()["list"][-1]["weather"][0]["icon"],
             "lat": lat,
             "lon": lon,
-            "temperature_max": weather_response_current_updated.json()["list"][-1]["temp"]["max"],
-            "temperature_min": weather_response_current_updated.json()["list"][-1]["temp"]["min"],
-            "humidity" : weather_response_current_updated.json()["list"][-1]["humidity"],
-            "weather_id": weather_response_current_updated.json()["list"][-1]["weather"][0]["id"],
-            "main": weather_response_current_updated.json()["list"][-1]["weather"][0]["main"],
-            "description": weather_response_current_updated.json()["list"][-1]["weather"][0]["description"]
+            "temperature_max": weather_response_future.json()["list"][-1]["main"]["temp_max"],
+            "temperature_min": weather_response_future.json()["list"][-1]["main"]["temp_min"],
+            "humidity": weather_response_future.json()["list"][-1]["main"]["humidity"],
+            "weather_id": weather_response_future.json()["list"][-1]["weather"][0]["id"],
+            "main": weather_response_future.json()["list"][-1]["weather"][0]["main"],
+            "description": weather_response_future.json()["list"][-1]["weather"][0]["description"],
+            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_future.json()["list"][-1]["weather"][0]["icon"]}.png'
 
         }
 
 
     }
 
-    find_icon = {
 
-        "get_icon": icon_url
-
-    }
-
-    return jsonify(previous_weather, previous_weather_1_day, current_weather, future_weather, future_weather_2, find_icon)
+    return jsonify(previous_weather, previous_weather_1_day, current_weather, future_weather, future_weather_2)
 
 
 if __name__ == "__main__":
