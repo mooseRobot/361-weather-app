@@ -146,6 +146,10 @@ body {
     justify-content: space-around;
 }
 
+#refresh {
+    cursor: pointer;
+}
+
 
 
 /*------*/
