@@ -131,7 +131,8 @@ const htmlTop = `
 `
 
 const htmlBottom = `
-    </div>
+        </div>
+    </body>
 `
 
 app.get("/search", async (req, res) => {
