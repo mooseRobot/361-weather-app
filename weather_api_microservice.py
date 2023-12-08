@@ -82,11 +82,12 @@ def prev():
     weather_response_previous = requests.get(
         f"https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=daily&units=imperial&start={int(past_1)}&end={int(past)}&appid={API_KEY}")
     weather_response_future = requests.get(
-        f"https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&units=imperial&start={int(future)}&end={int(future_1)}&appid={API_KEY}")
+        f"https://pro.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&type=daily&units=imperial&start={int(future)}&end={int(future_1)}&appid={API_KEY}")
     weather_response_current_updated = requests.get(
         f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&&cnt={3}&appid={API_KEY}")
 
-    print(weather_response_future)
+    second_day_forecast = weather_response_future.json()['list'][1]
+    third_day_forecast = weather_response_future.json()['list'][2]
 
     previous_weather = {
         "previous_weather_2_day": {
@@ -142,39 +143,33 @@ def prev():
     }
 
     future_weather = {
-
         "future_weather": {
-            "date" : future_date_first,
+            "date": future_date_first,  # Ensure this is correctly set
             "lat": lat,
             "lon": lon,
-            "temperature_max": weather_response_future.json()["list"][0]["main"]["temp_max"],
-            "temperature_min": weather_response_future.json()["list"][0]["main"]["temp_min"],
-            "humidity" : weather_response_future.json()["list"][0]["main"]["humidity"],
-            "weather_id": weather_response_future.json()["list"][0]["weather"][0]["id"],
-            "main": weather_response_future.json()["list"][0]["weather"][0]["main"],
-            "description": weather_response_future.json()["list"][0]["weather"][0]["description"],
-            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_future.json()["list"][0]["weather"][0]["icon"]}.png'
-
-        }}
-
-    future_weather_2 = {
-
-        "future_weather_next": {
-            "date": future_date_last,
-            "icon": weather_response_future.json()["list"][-1]["weather"][0]["icon"],
-            "lat": lat,
-            "lon": lon,
-            "temperature_max": weather_response_future.json()["list"][-1]["main"]["temp_max"],
-            "temperature_min": weather_response_future.json()["list"][-1]["main"]["temp_min"],
-            "humidity": weather_response_future.json()["list"][-1]["main"]["humidity"],
-            "weather_id": weather_response_future.json()["list"][-1]["weather"][0]["id"],
-            "main": weather_response_future.json()["list"][-1]["weather"][0]["main"],
-            "description": weather_response_future.json()["list"][-1]["weather"][0]["description"],
-            "icon_url":  f'http://openweathermap.org/img/w/{weather_response_future.json()["list"][-1]["weather"][0]["icon"]}.png'
-
+            "temperature_max": second_day_forecast['temp']['max'],
+            "temperature_min": second_day_forecast['temp']['min'],
+            "humidity": second_day_forecast['humidity'],
+            "weather_id": second_day_forecast['weather'][0]['id'],
+            "main": second_day_forecast['weather'][0]['main'],
+            "description": second_day_forecast['weather'][0]['description'],
+            "icon_url": f"http://openweathermap.org/img/w/{second_day_forecast['weather'][0]['icon']}.png"
         }
-
-
+    }
+    future_weather_2 = {
+        "future_weather_next": {
+            "date": future_date_last,  # Ensure this is correctly set
+            "icon": third_day_forecast['weather'][0]['icon'],
+            "lat": lat,
+            "lon": lon,
+            "temperature_max": third_day_forecast['temp']['max'],
+            "temperature_min": third_day_forecast['temp']['min'],
+            "humidity": third_day_forecast['humidity'],
+            "weather_id": third_day_forecast['weather'][0]['id'],
+            "main": third_day_forecast['weather'][0]['main'],
+            "description": third_day_forecast['weather'][0]['description'],
+            "icon_url": f"http://openweathermap.org/img/w/{third_day_forecast['weather'][0]['icon']}.png"
+        }
     }
 
 
