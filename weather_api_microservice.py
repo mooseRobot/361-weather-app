@@ -91,7 +91,7 @@ def prev():
 
     previous_weather = {
         "previous_weather_2_day": {
-            "date" : prev_date_last,
+            "weatherDate" : prev_date_last,
             "lat": lat,
             "lon": lon,
             "temperature_max": weather_response_previous.json()["list"][0]["main"]["temp_max"],
@@ -106,7 +106,7 @@ def prev():
     previous_weather_1_day = {
 
         "previous_weather_1_day": {
-            "date": prev_date_first,
+            "weatherDate": prev_date_first,
             "icon": weather_response_previous.json()["list"][-1]["weather"][0]["icon"],
             "lat": lat,
             "lon": lon,
@@ -125,7 +125,7 @@ def prev():
     current_weather = {
 
         "current_weather": {
-            "date": str(on_date)[0:15],
+            "currentDate": str(on_date)[0:15],
             "lat": lat,
             "lon": lon,
             "temperature_max": weather_response_current_updated.json()["main"]["temp_max"],
@@ -144,7 +144,7 @@ def prev():
 
     future_weather = {
         "future_weather": {
-            "date": future_date_first,  # Ensure this is correctly set
+            "weatherDate": future_date_first,
             "lat": lat,
             "lon": lon,
             "temperature_max": second_day_forecast['temp']['max'],
@@ -158,7 +158,7 @@ def prev():
     }
     future_weather_2 = {
         "future_weather_next": {
-            "date": future_date_last,  # Ensure this is correctly set
+            "weatherDate": future_date_last,
             "icon": third_day_forecast['weather'][0]['icon'],
             "lat": lat,
             "lon": lon,
