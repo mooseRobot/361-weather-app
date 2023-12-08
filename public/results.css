@@ -94,9 +94,9 @@ body {
 }
 
 .weather-main {
-    width: 200px;
-    height: 200px;
-    box-shadow: 8px 8px 5px rgba(0,0,0,1);
+    width: 215px;
+    height: 215px;
+    box-shadow: 6px 6px 5px rgba(0,0,0,0.7);
 }
 
 
