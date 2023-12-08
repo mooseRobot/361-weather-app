@@ -21,13 +21,35 @@ function formatDate(timestamp) {
     return date.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+function formatMainDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+    // Extract the day for the ordinal suffix
+    const day = date.getDate();
+    const ordinalSuffix = getOrdinalSuffix(day);
+
+    return `${date.toLocaleDateString('en-US', { month: 'long' })} ${day}${ordinalSuffix}, ${date.getFullYear()}`;
+}
+
+function getOrdinalSuffix(day) {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+        case 1:  return "st";
+        case 2:  return "nd";
+        case 3:  return "rd";
+        default: return "th";
+    }
+}
+
+
 function createWeatherCard(record, cityName) {
-    const date = formatDate(record.dt);
-    const description = record.weather[0].description;
-    const highTemp = kelvinToCelsius(record.main.temp_max) + '°';
-    const lowTemp = kelvinToCelsius(record.main.temp_min) + '°';
-    const iconCode = record.weather[0].icon;
-    const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`
+    const date = formatMainDate(record.weatherDate);
+    const description = record.description;
+    const highTemp = Math.trunc(record.temperature_max) + '°';
+    const lowTemp = Math.trunc(record.temperature_min) + '°';
+    const iconUrl = record.icon_url;
+    const humidity = record.humidity + '%'; // Adjusted to use humidity from the data
 
     return `
         <div class="weather-card-container">
@@ -43,41 +65,46 @@ function createWeatherCard(record, cityName) {
                         <div class="low margin-top-bottom-10">Low: ${lowTemp}</div>
                     </div>
                 </div>
-                <div class="precipitation">Precipitation: 45%</div> <!-- Need to replace with precipitation -->
+                <div class="precipitation">Humidity: ${humidity}</div>
             </div>
         </div>`;
 }
 
 function createMainWeatherCard(record, cityName) {
-    const date = formatDate(record.dt);
-    const description = record.weather[0].description;
-    const highTemp = kelvinToCelsius(record.main.temp_max).toFixed(1) + '°';
-    const lowTemp = kelvinToCelsius(record.main.temp_min).toFixed(1) + '°';
-
+    const currentWeather = record.current_weather;
+    const date = formatMainDate(new Date(currentWeather.currentDate));
+    const description = currentWeather.weather_description;
+    const highTemp = currentWeather.temperature_max.toFixed(1) + '°';
+    const lowTemp = currentWeather.temperature_min.toFixed(1) + '°';
+    const currentTemperature = currentWeather.current_temperature.toFixed(1) + '°';
+    const humidity = currentWeather.humidity + '%';
+    const cloudiness = currentWeather.cloudiness + '%';
+    const feelsLike = currentWeather.feels_like.toFixed(1) + '°';
+    const weatherIconUrl = currentWeather.weather_icon_url;
 
     return `
         <div class="weather-card-container">
-        <div class="date">${date}</div>
-        <div class="weather-card weather-main">
-            <div class="weather-header-main flex">
-                <div class="weather-icon">☁️</div>
-                <div class="city-name h1-font-size">${cityName}</div>
-                <div class="refresh">🔄</div>
+            <div class="date">${date}</div>
+            <div class="weather-card weather-main">
+                <div class="weather-header-main flex">
+                    <div class="weather-icon"><img src="${weatherIconUrl}" alt="Weather Icon"></div>
+                    <div class="city-name h1-font-size">${cityName}</div>
+                    <div class="refresh">🔄</div>
+                </div>
+                <div class="sub-header-main flex">
+                    <div class="description">${description}</div>
+                    <div class="current-temperature h1-font-size">${currentTemperature}</div>
+                </div>
+                <div class="main-info-main flex">
+                    <div class="high margin-5">High: ${highTemp}</div>
+                    <div class="UV-index margin-5">Cloudiness: ${cloudiness}</div>
+                    <div class="low margin-5">Low: ${lowTemp}</div>
+                    <div class="humidity margin-5">Humidity: ${humidity}</div>
+                </div>
+                <div class="precipitation">Feels Like: ${feelsLike}</div>
             </div>
-            <div class="sub-header-main flex">
-                <div class="description">Cloudy</div>
-                <div class="current-temperature h1-font-size">75°</div>
-            </div>
-            <div class="main-info-main flex">
-                <div class="high margin-5">High: 89°</div>
-                <div class="UV-index margin-5">UV Index: 8</div>
-                <div class="low margin-5">Low: 70°</div>
-                <div class="humidity margin-5"> Humidity 30%</div>
-            </div>
-            <div class="precipitation">Precipitation: 45%</div>
         </div>
-    </div>
-`
+    `;
 }
 
 
@@ -109,39 +136,33 @@ const htmlBottom = `
 
 app.get("/search", async (req, res) => {
     const cityName = req.query.city;
-    let currentWeather = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
-    let historicalEnd = Math.floor(Date.now() / 1000) - 86400;
-    let historicalStart = historicalEnd - (86400 * 2);
-    let historicalWeather = `https://history.openweathermap.org/data/2.5/history/city?q=${cityName}&type=hour&start=${historicalStart}&end=${historicalEnd}&appid=${apiKey}`
+    let weatherResponse = await fetch(`http://127.0.0.1:5000/?cityname=${cityName}`)
 
     try {
-        let currentWeatherResponse = await fetch(currentWeather);
-        let historicalResponse = await fetch(historicalWeather);
 
-        let data = await currentWeatherResponse.json();
-
-        let historicalData = await historicalResponse.json();
-        let middle = Math.floor(historicalData.list.length / 2);
-        let firstRecord = historicalData.list[0];
-        let midRecord = historicalData.list[middle];
-        let lastRecord = historicalData.list[historicalData.list.length-1];
-
-        const firstCardHtml = createWeatherCard(firstRecord, cityName);
-        const midCardHtml = createWeatherCard(midRecord, cityName);
-        const lastCardHtml = createWeatherCard(lastRecord, cityName);
+        //
+        let weatherData = await weatherResponse.json()
+        const previousWeatherHtml = createWeatherCard(weatherData[0]["previous_weather_2_day"], cityName);
+        const dayBeforeWeatherHtml = createWeatherCard(weatherData[1]["previous_weather_1_day"], cityName);
+        const mainCardHtml = createMainWeatherCard(weatherData[2], cityName);
+        const dayAfterWeatherHtml = createWeatherCard(weatherData[3]["future_weather"], cityName);
+        const twoDaysAfterWeatherHtml = createWeatherCard(weatherData[4]["future_weather_next"], cityName);
 
         // Redirect to the /results route with the weather data
         // res.json(data); // Send JSON response
         res.send(`${htmlTop}
-        ${firstCardHtml}
-        ${midCardHtml}
-        ${lastCardHtml}
+        ${previousWeatherHtml}
+        ${dayBeforeWeatherHtml}
+        ${mainCardHtml}
+        ${dayAfterWeatherHtml}
+        ${twoDaysAfterWeatherHtml}
         ${htmlBottom}
 `)
     } catch (error) {
         // Handle errors
         res.status(500).send('Error fetching weather data');
+        console.log(error)
     }
 });
 
