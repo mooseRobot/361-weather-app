@@ -1,9 +1,18 @@
 from flask import Flask, request, jsonify
 import requests
 from datetime import date, timedelta, datetime
+import pytz
+from timezonefinder import TimezoneFinder
 
 
 app = Flask(__name__)
+
+def get_local_date(lat, lon):
+    tf = TimezoneFinder()
+    timezone_str = tf.timezone_at(lat=lat, lng=lon)  # get timezone name
+    timezone = pytz.timezone(timezone_str)
+    local_date = datetime.now(timezone).date()  # get local date based on timezone
+    return local_date
 
 
 @app.route("/")
@@ -17,7 +26,7 @@ def prev():
 
     lat = geo_response.json()[0]["lat"]
     lon = geo_response.json()[0]["lon"]
-
+    local_date = get_local_date(lat, lon)
     temp = ""
 
     weather_response_current = requests.get(
@@ -30,8 +39,8 @@ def prev():
         new_date = (date.fromtimestamp(dt))
         on_date = (str(new_date))[0:10]
         print(on_date, "success")
-        if on_date != date.today():
-            on_date = date.today()
+        if on_date != str(local_date):
+            on_date = str(local_date)
             print(on_date, "success1")
 
     # from date/month/time to epoch time
@@ -40,7 +49,7 @@ def prev():
     new_example = ((d - epoch).total_seconds())
     print(int(new_example))
 
-    today = date.today()
+    today = local_date
     future_date_first = timedelta(days=1) + today
     future_date_last = timedelta(days=2) + today
 
@@ -55,7 +64,7 @@ def prev():
     print(int(future_1))
 
     # previous dates
-    today = date.today()
+    today = local_date
     prev_date_first = today - timedelta(days=1)
     prev_date_last = today - timedelta(days=2)
     print(prev_date_first)
