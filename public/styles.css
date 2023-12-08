@@ -4,7 +4,11 @@ body {
     overflow: hidden;
     font-family: Roboto, sans-serif;
 
-    background-color: #f5f5f5;
+    background-image: url("/images/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 6% 6%;
+    background-color: #f0fdff;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -22,7 +26,8 @@ body {
 }
 
 #current-time {
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-family: Roboto, sans-serif;
     font-size: 7.5rem;
     margin-top: 15rem;
     margin-bottom: 8rem;
@@ -34,6 +39,7 @@ body {
     border-radius: 16px;
     padding: 8px 24px;
     width: 400px;
+    background-color: #fbfbfb;
 }
 
 #submit-button {

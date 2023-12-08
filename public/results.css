@@ -3,8 +3,13 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: Roboto, sans-serif;
-    background-color: #f5f5f5;
 
+
+    background-image: url("/images/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 6% 6%;
+    background-color: #f0fdff;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -39,7 +44,8 @@ body {
 }
 
 #current-time-post {
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-family: Roboto, sans-serif;
     font-size: 3.5rem;
     margin-left: 20vh;
     /*margin-top: 15rem;*/
@@ -52,6 +58,7 @@ body {
     border-radius: 16px;
     padding: 8px 24px;
     width: 400px;
+    background-color: #fbfbfb;
 }
 
 #submit-button {
@@ -91,6 +98,7 @@ body {
     height: 170px;
     text-align: center;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    background-color: #fbfbfb;
 }
 
 .weather-main {
