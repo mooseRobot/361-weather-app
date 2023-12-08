@@ -74,12 +74,12 @@ function createMainWeatherCard(record, cityName) {
     const currentWeather = record.current_weather;
     const date = formatMainDate(new Date(currentWeather.currentDate));
     const description = currentWeather.weather_description;
-    const highTemp = currentWeather.temperature_max.toFixed(1) + '°';
-    const lowTemp = currentWeather.temperature_min.toFixed(1) + '°';
-    const currentTemperature = currentWeather.current_temperature.toFixed(1) + '°';
+    const highTemp = currentWeather.temperature_max.toFixed() + '°';
+    const lowTemp = currentWeather.temperature_min.toFixed() + '°';
+    const currentTemperature = currentWeather.current_temperature.toFixed() + '°';
     const humidity = currentWeather.humidity + '%';
     const cloudiness = currentWeather.cloudiness + '%';
-    const feelsLike = currentWeather.feels_like.toFixed(1) + '°';
+    const feelsLike = currentWeather.feels_like.toFixed() + '°';
     const weatherIconUrl = currentWeather.weather_icon_url;
 
     return `
